@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: hello-service
+
+  sleuth:
+    otel:
+      exporter:
+        otlp:
+          endpoint: http://otel-collector:4317
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+weatherServiceForecast:
+  baseUrl: http://localhost:8081

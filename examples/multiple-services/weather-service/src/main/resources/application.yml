@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: weather-service
+
+  sleuth:
+    otel:
+      exporter:
+        otlp:
+          endpoint: http://otel-collector:4317
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    tags:
+      application: ${spring.application.name}
+server:
+  port: 8081
+
+nationalWeatherService:
+  baseUrl: https://api.weather.gov/
