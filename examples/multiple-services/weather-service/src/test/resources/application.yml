@@ -3,7 +3,7 @@ spring:
     name: weather-service
   carbon-aware:
     enabled: true
-    endpoint: ${CARBON_AWARE_ENDPOINT}
+    endpoint: http://localhost:8080
 
   sleuth:
     otel:

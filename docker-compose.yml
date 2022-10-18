@@ -8,7 +8,7 @@ services:
     container_name: prometheus
     image: prom/prometheus:latest
     volumes:
-      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+      - ./examples/multiple-services/prometheus.yaml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
   
@@ -40,7 +40,7 @@ services:
     image: otel/opentelemetry-collector-contrib:0.62.1
     command: ["--config=/etc/otel-collector-config.yaml", "${OTELCOL_ARGS}"]
     volumes:
-      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+      - ./examples/multiple-services/otel-collector-config.yaml:/etc/otel-collector-config.yaml
     ports:
       - "1888:1888"   # pprof extension
       - "8888:8888"   # Prometheus metrics exposed by the collector
@@ -57,20 +57,34 @@ services:
   hello-service:
     build:
       dockerfile: Dockerfile
-      context: ./hello-service
+      context: ./examples/multiple-services/hello-service
     ports:
-      - "8080:8080"
+      - "8082:8082"
     depends_on:
       - otel-collector
+      - carbon-aware-sdk
       - weather-service
     environment:
+      - CARBON_AWARE_ENDPOINT=http://carbon-aware-sdk:8083
       - weatherServiceForecast_baseUrl=http://weather-service:8081
 
   weather-service:
     build:
       dockerfile: Dockerfile
-      context: ./weather-service
+      context: ./examples/multiple-services/weather-service
     ports:
       - "8081:8081"
     depends_on:
       - otel-collector
+      - carbon-aware-sdk
+    environment:
+      - CARBON_AWARE_ENDPOINT=http://carbon-aware-sdk:8083
+
+  carbon-aware-sdk:
+    image: carbon_aware:v1
+    ports:
+      - "8083:80"
+    environment:
+      - CarbonAwareVars__CarbonIntensityDataSource=WattTime
+      - WattTimeClient__Username=gsf_iamdebojyoti
+      - WattTimeClient__Password=UNI6g!tztB*+2Ls(7
