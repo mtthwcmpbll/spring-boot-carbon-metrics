@@ -1,4 +1,4 @@
-version: "2"
+version: "2.4"
 services:
 
   ## Metrics Infrastructure
@@ -24,6 +24,7 @@ services:
   # Jaeger
   jaeger-all-in-one:
     image: jaegertracing/all-in-one:latest
+    container_name: jaeger-all-in-one
     ports:
       - "16686:16686"
       - "14268"
@@ -32,12 +33,14 @@ services:
   # Zipkin
   zipkin-all-in-one:
     image: openzipkin/zipkin:latest
+    container_name: zipkin-all-in-one
     ports:
       - "9411:9411"
 
   # Collector
   otel-collector:
     image: otel/opentelemetry-collector-contrib:0.62.1
+    container_name: otel-collector
     command: ["--config=/etc/otel-collector-config.yaml", "${OTELCOL_ARGS}"]
     volumes:
       - ./examples/multiple-services/otel-collector-config.yaml:/etc/otel-collector-config.yaml
@@ -51,6 +54,16 @@ services:
     depends_on:
       - jaeger-all-in-one
       - zipkin-all-in-one
+
+  carbon-aware-sdk:
+    image: carbon_aware:v1
+    ports:
+      - "80:80"
+    container_name: carbon-aware-sdk
+    environment:
+      - CarbonAwareVars__CarbonIntensityDataSource=WattTime
+      - WattTimeClient__Username=gsf_iamdebojyoti
+      - WattTimeClient__Password=UNI6g!tztB*+2Ls(7
   
   ## Application
 
@@ -58,6 +71,7 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./examples/multiple-services/hello-service
+    container_name: hello-service
     ports:
       - "8082:8082"
     depends_on:
@@ -65,26 +79,18 @@ services:
       - carbon-aware-sdk
       - weather-service
     environment:
-      - CARBON_AWARE_ENDPOINT=http://carbon-aware-sdk:8083
+      - CARBON_AWARE_ENDPOINT=http://carbon-aware-sdk:80
       - weatherServiceForecast_baseUrl=http://weather-service:8081
 
   weather-service:
     build:
       dockerfile: Dockerfile
       context: ./examples/multiple-services/weather-service
+    container_name: weather-service
     ports:
       - "8081:8081"
     depends_on:
       - otel-collector
       - carbon-aware-sdk
     environment:
-      - CARBON_AWARE_ENDPOINT=http://carbon-aware-sdk:8083
-
-  carbon-aware-sdk:
-    image: carbon_aware:v1
-    ports:
-      - "8083:80"
-    environment:
-      - CarbonAwareVars__CarbonIntensityDataSource=WattTime
-      - WattTimeClient__Username=gsf_iamdebojyoti
-      - WattTimeClient__Password=UNI6g!tztB*+2Ls(7
+      - CARBON_AWARE_ENDPOINT=http://carbon-aware-sdk:80
