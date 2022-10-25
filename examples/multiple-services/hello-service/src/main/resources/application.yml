@@ -4,6 +4,7 @@ spring:
   carbon-aware:
     enabled: true
     endpoint: ${CARBON_AWARE_ENDPOINT}
+    location: ${EMISSIONS_LOCATION:westus2}
 
   sleuth:
     otel:
@@ -18,6 +19,6 @@ management:
         include: "*"
 
 weatherServiceForecast:
-  baseUrl: http://localhost:8081
+  baseUrl: ${weatherServiceForecast_baseUrl:http://localhost:8081}
 server:
   port: 8082

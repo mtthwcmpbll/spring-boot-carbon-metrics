@@ -6,11 +6,10 @@ import org.springframework.boot.actuate.endpoint.web.annotation.RestControllerEn
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@RestControllerEndpoint(id = "carbon-metrics")
+@RestControllerEndpoint(id = "carbon")
 public class CarbonAwareActuatorEndpoint {
 
     private CarbonAwareSdkClient client;
@@ -20,8 +19,8 @@ public class CarbonAwareActuatorEndpoint {
     }
 
     @GetMapping("/emissions")
-    public ResponseEntity<List<Emissions>> customEndPoint(@RequestParam("location") String location) {
-        return new ResponseEntity<>(client.emissionsForLocation(location), HttpStatus.OK);
+    public ResponseEntity<List<Emissions>> customEndPoint() {
+        return new ResponseEntity<>(client.emissionsForLocation(), HttpStatus.OK);
     }
 
 }

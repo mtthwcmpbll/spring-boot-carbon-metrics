@@ -4,6 +4,7 @@ spring:
   carbon-aware:
     enabled: true
     endpoint: http://localhost:8080
+    location: test
 
   sleuth:
     otel:

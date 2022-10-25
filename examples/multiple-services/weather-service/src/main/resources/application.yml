@@ -4,6 +4,7 @@ spring:
   carbon-aware:
     enabled: true
     endpoint: ${CARBON_AWARE_ENDPOINT}
+    location: ${EMISSIONS_LOCATION:westus2}
 
   sleuth:
     otel:
