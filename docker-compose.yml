@@ -62,8 +62,8 @@ services:
     container_name: carbon-aware-sdk
     environment:
       - CarbonAwareVars__CarbonIntensityDataSource=WattTime
-      - WattTimeClient__Username=gsf_iamdebojyoti
-      - WattTimeClient__Password=UNI6g!tztB*+2Ls(7
+      - WattTimeClient__Username=${WATTTIME_CLIENT_USERNAME:?err}
+      - WattTimeClient__Password=${WATTTIME_CLIENT_PASSWORD:?err}
   
   ## Application
 
