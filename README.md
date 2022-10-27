@@ -19,3 +19,9 @@ This project aims to leverage industry-standard metrics and tracing implementati
 It focused on the Java tech stack and specifically the Spring Boot development ecosystem because many enterprises use these today, and if we can make it easier to move the needle just a little for those large software estates we can make a big impact.
 
 JRebel's [Java Technology Report](https://www.jrebel.com/blog/2021-java-technology-report) shows that Spring Boot is currently used on over two thirds of Java projects! [Research on GitHub's public repositories](https://brainhub.eu/library/most-popular-languages-on-github) shows that Java is a consistent top language for all kinds of projects, big or small. And there are lots of java projects tucked away behind enterprises all around the world. If we can make it easy for this community to get carbon awareness for little or no work, that's a lot of potential first steps toward making today's software more sustainable.
+
+## Quickstart
+
+Build the application docker containers and then start them up (along with the third-party collectors) with:
+
+`./playground.sh && docker-compose up`

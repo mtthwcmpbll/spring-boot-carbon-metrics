@@ -3,8 +3,8 @@ spring:
     name: hello-service
   carbon-aware:
     enabled: true
-    endpoint: ${CARBON_AWARE_ENDPOINT}
-    location: ${EMISSIONS_LOCATION:westus2}
+    endpoint: http://localhost:8080
+    location: test
 
   sleuth:
     otel:
@@ -19,6 +19,4 @@ management:
         include: "*"
 
 weatherServiceForecast:
-  baseUrl: ${weatherServiceForecast_baseUrl:http://localhost:8081}
-server:
-  port: 8082
+  baseUrl: http://localhost:8081

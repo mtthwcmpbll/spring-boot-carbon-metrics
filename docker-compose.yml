@@ -1,4 +1,4 @@
-version: "2"
+version: "2.4"
 services:
 
   ## Metrics Infrastructure
@@ -8,7 +8,7 @@ services:
     container_name: prometheus
     image: prom/prometheus:latest
     volumes:
-      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+      - ./examples/multiple-services/prometheus.yaml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
   
@@ -24,6 +24,7 @@ services:
   # Jaeger
   jaeger-all-in-one:
     image: jaegertracing/all-in-one:latest
+    container_name: jaeger-all-in-one
     ports:
       - "16686:16686"
       - "14268"
@@ -32,15 +33,17 @@ services:
   # Zipkin
   zipkin-all-in-one:
     image: openzipkin/zipkin:latest
+    container_name: zipkin-all-in-one
     ports:
       - "9411:9411"
 
   # Collector
   otel-collector:
     image: otel/opentelemetry-collector-contrib:0.62.1
+    container_name: otel-collector
     command: ["--config=/etc/otel-collector-config.yaml", "${OTELCOL_ARGS}"]
     volumes:
-      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+      - ./examples/multiple-services/otel-collector-config.yaml:/etc/otel-collector-config.yaml
     ports:
       - "1888:1888"   # pprof extension
       - "8888:8888"   # Prometheus metrics exposed by the collector
@@ -51,26 +54,43 @@ services:
     depends_on:
       - jaeger-all-in-one
       - zipkin-all-in-one
+
+  carbon-aware-sdk:
+    image: carbon_aware:v1
+    ports:
+      - "80:80"
+    container_name: carbon-aware-sdk
+    environment:
+      - CarbonAwareVars__CarbonIntensityDataSource=WattTime
+      - WattTimeClient__Username=${WATTTIME_CLIENT_USERNAME:?err}
+      - WattTimeClient__Password=${WATTTIME_CLIENT_PASSWORD:?err}
   
   ## Application
 
   hello-service:
     build:
       dockerfile: Dockerfile
-      context: ./hello-service
+      context: ./examples/multiple-services/hello-service
+    container_name: hello-service
     ports:
-      - "8080:8080"
+      - "8082:8082"
     depends_on:
       - otel-collector
+      - carbon-aware-sdk
       - weather-service
     environment:
+      - CARBON_AWARE_ENDPOINT=http://carbon-aware-sdk:80
       - weatherServiceForecast_baseUrl=http://weather-service:8081
 
   weather-service:
     build:
       dockerfile: Dockerfile
-      context: ./weather-service
+      context: ./examples/multiple-services/weather-service
+    container_name: weather-service
     ports:
       - "8081:8081"
     depends_on:
       - otel-collector
+      - carbon-aware-sdk
+    environment:
+      - CARBON_AWARE_ENDPOINT=http://carbon-aware-sdk:80
