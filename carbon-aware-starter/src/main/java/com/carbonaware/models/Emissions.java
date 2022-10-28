@@ -1,9 +1,12 @@
 package com.carbonaware.models;
 
+import java.time.ZonedDateTime;
+import java.util.Date;
+
 public class Emissions {
 
     private String location;
-    private String time;
+    private ZonedDateTime time;
     private Double rating;
     private String duration;
 
@@ -15,11 +18,11 @@ public class Emissions {
         this.location = location;
     }
 
-    public String getTime() {
+    public ZonedDateTime getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(ZonedDateTime time) {
         this.time = time;
     }
 

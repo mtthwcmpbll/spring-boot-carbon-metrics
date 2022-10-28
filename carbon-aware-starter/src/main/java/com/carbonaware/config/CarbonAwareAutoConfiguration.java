@@ -4,6 +4,8 @@ import com.carbonaware.apis.CarbonAwareSdkClient;
 import com.carbonaware.apis.CarbonEmissionsParams;
 import com.carbonaware.apis.DefaultCarbonEmissionsParams;
 import com.carbonaware.endpoint.CarbonAwareActuatorEndpoint;
+import com.carbonaware.sci.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -31,7 +33,29 @@ public class CarbonAwareAutoConfiguration {
     }
 
     @Bean
-    public CarbonAwareActuatorEndpoint endpoint(CarbonAwareSdkClient client) {
-        return new CarbonAwareActuatorEndpoint(client);
+    public CarbonAwareActuatorEndpoint endpoint(CarbonAwareSdkClient client, SoftwareCarbonIntensityService sciService) {
+        return new CarbonAwareActuatorEndpoint(client, sciService);
+    }
+
+    @Bean
+    public SoftwareCarbonIntensityService softwareCarbonIntensityService(EnergyConsumptionProvider energyConsumptionProvider,
+                                                                         MarginalEmissionsProvider marginalEmissionsProvider,
+                                                                         EmbodiedEmissionsProvider embodiedEmissionsProvider) {
+        return new SoftwareCarbonIntensityService(energyConsumptionProvider, marginalEmissionsProvider, embodiedEmissionsProvider);
+    }
+
+    @Bean
+    public EnergyConsumptionProvider energyConsumptionProvider() {
+        return new HeuristicEnergyConsumptionProvider();
+    }
+
+    @Bean
+    public MarginalEmissionsProvider marginalEmissionsProvider(CarbonAwareSdkClient client) {
+        return new CarbonAwareSdkMarginalEmissionsProvider(client);
+    }
+
+    @Bean
+    public EmbodiedEmissionsProvider embodiedEmissionsProvider() {
+        return new ConfiguredEmboddiedEmissionsProvider();
     }
 }
