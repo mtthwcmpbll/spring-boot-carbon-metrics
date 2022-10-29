@@ -2,10 +2,10 @@ package com.carbonaware.sci;
 
 import java.util.Random;
 
-public class HeuristicEnergyConsumptionProvider implements EnergyConsumptionProvider {
+public class ResourceUtilizationEnergyConsumptionProvider implements EnergyConsumptionProvider {
 
 
-    public HeuristicEnergyConsumptionProvider() {
+    public ResourceUtilizationEnergyConsumptionProvider() {
 
     }
 
