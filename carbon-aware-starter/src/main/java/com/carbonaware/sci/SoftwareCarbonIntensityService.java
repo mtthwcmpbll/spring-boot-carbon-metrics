@@ -1,14 +1,11 @@
 package com.carbonaware.sci;
 
-import org.springframework.stereotype.Service;
-
 /**
  * The Software Carbon Intensity (SCI) is a rate, carbon emissions per one unit of R. The equation used to calculate
  * the SCI value of a software system is:
  *
  * SCI = ((E * I) + M) per R
  */
-@Service
 public class SoftwareCarbonIntensityService {
 
     // In the SCI spec, this provides the 'E' value

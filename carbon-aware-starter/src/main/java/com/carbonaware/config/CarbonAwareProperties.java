@@ -9,6 +9,8 @@ public class CarbonAwareProperties {
 
     private String location = "";
 
+    private double embodiedEmissions = 0.0;
+
     public String getEndpoint() {
         return endpoint;
     }
@@ -23,5 +25,13 @@ public class CarbonAwareProperties {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public double getEmbodiedEmissions() {
+        return embodiedEmissions;
+    }
+
+    public void setEmbodiedEmissions(double embodiedEmissions) {
+        this.embodiedEmissions = embodiedEmissions;
     }
 }
