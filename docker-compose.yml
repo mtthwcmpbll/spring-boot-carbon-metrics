@@ -68,6 +68,7 @@ services:
   ## Application
 
   hello-service:
+    image: hello-service:v1
     build:
       dockerfile: Dockerfile
       context: ./examples/multiple-services/hello-service
@@ -83,6 +84,7 @@ services:
       - weatherServiceForecast_baseUrl=http://weather-service:8081
 
   weather-service:
+    image: weather-service:v1
     build:
       dockerfile: Dockerfile
       context: ./examples/multiple-services/weather-service

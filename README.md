@@ -22,6 +22,10 @@ JRebel's [Java Technology Report](https://www.jrebel.com/blog/2021-java-technolo
 
 ## Quickstart
 
-Build the application docker containers and then start them up (along with the third-party collectors) with:
+Build the application docker containers :
 
-`./playground.sh && docker-compose up`
+`./playground.sh`
+
+Start the docker containers (along with the third-party collectors) with:
+
+`WATTTIME_CLIENT_USERNAME=<USERNAME> WATTTIME_CLIENT_PASSWORD==<PWD> docker-compose up -d --build`

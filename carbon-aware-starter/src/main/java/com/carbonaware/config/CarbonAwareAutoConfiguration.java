@@ -33,8 +33,8 @@ public class CarbonAwareAutoConfiguration {
     }
 
     @Bean
-    public CarbonAwareActuatorEndpoint endpoint(CarbonAwareSdkClient client, SoftwareCarbonIntensityService sciService) {
-        return new CarbonAwareActuatorEndpoint(client, sciService);
+    public CarbonAwareActuatorEndpoint endpoint(CarbonAwareSdkClient client, MeterRegistry registry, SoftwareCarbonIntensityService sciService) {
+        return new CarbonAwareActuatorEndpoint(client, registry, sciService);
     }
 
     @Bean
@@ -44,18 +44,21 @@ public class CarbonAwareAutoConfiguration {
         return new SoftwareCarbonIntensityService(energyConsumptionProvider, marginalEmissionsProvider, embodiedEmissionsProvider);
     }
 
+    @ConditionalOnMissingBean(EnergyConsumptionProvider.class)
     @Bean
     public EnergyConsumptionProvider energyConsumptionProvider(MeterRegistry metricsRegistry) {
         return new ResourceUtilizationEnergyConsumptionProvider(metricsRegistry);
     }
 
+    @ConditionalOnMissingBean(MarginalEmissionsProvider.class)
     @Bean
     public MarginalEmissionsProvider marginalEmissionsProvider(CarbonAwareSdkClient client) {
         return new CarbonAwareSdkMarginalEmissionsProvider(client);
     }
 
+    @ConditionalOnMissingBean(EmbodiedEmissionsProvider.class)
     @Bean
-    public EmbodiedEmissionsProvider embodiedEmissionsProvider() {
-        return new ConfiguredEmboddiedEmissionsProvider();
+    public EmbodiedEmissionsProvider embodiedEmissionsProvider(CarbonAwareProperties props) {
+        return new ConfiguredEmboddiedEmissionsProvider(props.getEmbodiedEmissions());
     }
 }

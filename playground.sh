@@ -8,6 +8,7 @@ mkdir temp
 cd temp
 git clone https://github.com/Green-Software-Foundation/carbon-aware-sdk.git
 cd carbon-aware-sdk
+git checkout v1.0.0
 cd ./$(git rev-parse --show-cdup)/src
 docker build -t carbon_aware:v1 -f CarbonAware.WebApi/src/Dockerfile .
 cd $SCRIPT_DIR
