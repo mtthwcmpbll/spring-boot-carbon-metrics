@@ -22,6 +22,8 @@ services:
       - "3000:3000"
     depends_on:
       - prometheus
+    volumes:
+      - ./examples/multiple-services/grafana-provisioning:/etc/grafana/provisioning
     networks:
       - example-net
   

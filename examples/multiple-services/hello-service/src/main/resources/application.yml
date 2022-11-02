@@ -12,11 +12,19 @@ spring:
         otlp:
           endpoint: http://otel-collector:4317
 
+# traceID and spanId are predefined MDC keys - we want the logs to include them
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 weatherServiceForecast:
   baseUrl: ${weatherServiceForecast_baseUrl:http://localhost:8081}

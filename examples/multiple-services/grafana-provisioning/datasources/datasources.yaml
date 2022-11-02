@@ -1,0 +1,27 @@
+apiVersion: 1
+
+datasources:
+- name: Loki
+  type: loki
+  access: proxy
+  url: http://loki:3100
+  password:
+  user:
+  database:
+  basicAuth: false
+  isDefault: false
+  jsonData:
+  readOnly: false
+
+- name: Prometheus
+  type: prometheus
+  access: proxy
+  url: http://prometheus:9090
+  password:
+  user:
+  database:
+  basicAuth: false
+  isDefault: true
+  jsonData:
+  httpMethod: POST
+  readOnly: false

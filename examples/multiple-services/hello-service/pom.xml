@@ -78,6 +78,13 @@
 			<artifactId>spring-cloud-sleuth-otel-autoconfigure</artifactId>  <!-- ... and we want to include the one coming from Spring Cloud Sleuth OTel -->
 		</dependency>
 
+		<!-- logs to Grafana Loki -->
+		<dependency>
+			<groupId>com.github.loki4j</groupId>
+			<artifactId>loki-logback-appender</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+
 		<dependency>
 			<groupId>io.opentelemetry</groupId>
 			<artifactId>opentelemetry-sdk-metrics</artifactId>
