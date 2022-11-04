@@ -14,9 +14,9 @@ public class HelloServiceApplication {
 		SpringApplication.run(HelloServiceApplication.class, args);
 	}
 
-	@Bean
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
+//	@Bean
+//	public RestTemplate restTemplate() {
+//		return new RestTemplate();
+//	}
 
 }
