@@ -59,6 +59,8 @@ services:
     image: carbon_aware:v1
     ports:
       - "80:80"
+    env_file:
+      - .env
     container_name: carbon-aware-sdk
     environment:
       - CarbonAwareVars__CarbonIntensityDataSource=WattTime
@@ -75,12 +77,13 @@ services:
     container_name: hello-service
     ports:
       - "8082:8082"
+    env_file:
+      - .env
     depends_on:
       - otel-collector
-      - carbon-aware-sdk
-      - weather-service
     environment:
       - CARBON_AWARE_ENDPOINT=http://carbon-aware-sdk:80
+      - EMISSIONS_LOCATION=${EMISSIONS_LOCATION}
       - weatherServiceForecast_baseUrl=http://weather-service:8081
 
   weather-service:
@@ -91,8 +94,10 @@ services:
     container_name: weather-service
     ports:
       - "8081:8081"
+    env_file:
+      - .env
     depends_on:
       - otel-collector
-      - carbon-aware-sdk
     environment:
       - CARBON_AWARE_ENDPOINT=http://carbon-aware-sdk:80
+      - EMISSIONS_LOCATION=${EMISSIONS_LOCATION}

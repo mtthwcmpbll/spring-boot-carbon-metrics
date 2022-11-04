@@ -27,6 +27,3 @@ cd $SCRIPT_DIR
 cd ./examples/multiple-services/hello-service
 ./mvnw clean package
 cd $SCRIPT_DIR
-
-# Build all of the docker images for our components
-docker-compose build
