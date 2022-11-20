@@ -24,9 +24,9 @@ public class ResourceUtilizationEnergyConsumptionProvider implements EnergyConsu
     @Override
     public double getEnergyConsumption() {
         // it's difficult to tell what kind of meter a metric is from the endpoint
-        metricsRegistry.forEachMeter(meter -> {
-            log.info("Found " + meter.getId() + " metric of type " + meter.getClass().getName());
-        });
+//        metricsRegistry.forEachMeter(meter -> {
+//            log.info("Found " + meter.getId() + " metric of type " + meter.getClass().getName());
+//        });
 
         // The process CPU usages is a percentage 0.0 - 1.0 of the systems processors, so we'll need to multiply this by
         // the systems total processors to get a scalar value that will change when we reduce the CPUs provisioned to an
@@ -44,9 +44,9 @@ public class ResourceUtilizationEnergyConsumptionProvider implements EnergyConsu
         }
 
         double processCpuUsagePercentage = cpuUsageSearch.value();
-        log.info("Current process CPU usage is: " + processCpuUsagePercentage);
+//        log.info("Current process CPU usage is: " + processCpuUsagePercentage);
         double systemCpusAvailable = systemCpusAvailableSearch.value();
-        log.info("Total CPUs on system is: " + systemCpusAvailable);
+//        log.info("Total CPUs on system is: " + systemCpusAvailable);
 
         return (processCpuUsagePercentage * systemCpusAvailable) * cpuEnergyTax;
     }

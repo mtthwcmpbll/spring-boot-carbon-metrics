@@ -11,6 +11,8 @@ spring:
       exporter:
         otlp:
           endpoint: http://otel-collector:4317
+    propagation:
+      type: w3c
 
 # traceID and spanId are predefined MDC keys - we want the logs to include them
 logging:
