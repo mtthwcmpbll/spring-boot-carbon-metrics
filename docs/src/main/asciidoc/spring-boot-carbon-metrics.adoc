@@ -1,0 +1,43 @@
+= Spring Boot Carbon Metrics
+Matthew Campbell, Debojyoti Dey
+:toc: left
+
+== Introduction
+
+#TODO: work in progress#
+
+=== Goals
+
+#TODO: work in progress#
+
+=== What is Software Carbon Intensity
+
+#TODO: work in progress#
+
+== Getting Started
+
+#TODO: work in progress#
+
+== Architecture
+
+#TODO: work in progress#
+
+== Configuration
+
+#TODO: work in progress#
+
+== Development Environment
+
+#TODO: work in progress#
+
+=== Building
+
+#TODO: work in progress#
+
+=== Releasing
+
+#TODO: work in progress#
+
+=== Support
+
+#TODO: work in progress#
