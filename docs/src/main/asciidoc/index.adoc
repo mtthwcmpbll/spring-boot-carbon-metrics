@@ -1,0 +1,1 @@
+include::spring-boot-carbon-metrics.adoc[]
