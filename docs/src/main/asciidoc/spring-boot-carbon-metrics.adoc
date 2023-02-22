@@ -4,27 +4,85 @@ Matthew Campbell, Debojyoti Dey
 
 == Introduction
 
-#TODO: work in progress#
+The Spring Boot Carbon Metrics project aims to provide a batteries-included auto-configured tool to instrument Spring Boot applications with carbon-aware features.  It leans heavily on the <<sci, Green Software Foundation's SCI specification>> along with other projects to provide the necessary components to compute SCI.
 
-=== Goals
+Rather than implementing low-level measurements itself, this project provides a modular framework to wire in existing measurement tools to gather energy use, carbon intensity, or embodied emissions and automatically compute and expose them in a standard way.
 
-#TODO: work in progress#
+=== Why this project exists
 
-=== What is Software Carbon Intensity
+One of the hardest parts about making carbon-aware computing decisions is knowing how to start seeing real data and measuring the impact of your everyday decisions. It's hard to know what to measure and how to do it, and sustainability concepts can feel like a rabbit-hole of "if I count this, do I need to figure out how to count that? Where do I stop?"
 
-#TODO: work in progress#
+==== Goals
+This project has three goals:
+
+1. Make it easy to measure and see the carbon impact of your Spring Boot applications, while they're running and while they're doing specific work
+1. Make it easy to measure and see that impact across multiple services interacting with each other
+1. Make it easy for lots of developers to get that same data and measure improvements towards their sustainability goals
+
+This project aims to leverage industry-standard metrics and tracing implementations to make it easy to understand this data in the same ways we use other business or technical measurements.
+
+==== Why Java?  Why Spring Boot?
+
+It is focused on the Java tech stack and specifically the Spring Boot development ecosystem because many enterprises use these today, and if we can make it easier to move the needle just a little for those large software estates we can make a big impact.
+
+JRebel's link:https://www.jrebel.com/blog/2021-java-technology-report[Java Technology Report] shows that Spring Boot is used on over two thirds of Java projects! link:https://brainhub.eu/library/most-popular-languages-on-github[Research on GitHub's public repositories] shows that Java is a consistent top language for all kinds of projects, big or small. And there are lots of java projects tucked away behind enterprises all around the world. If we can make it easy for this community to get carbon awareness for little or no work, that's a lot of potential first steps toward making today's software more sustainable.
+
+=== What is Software Carbon Intensity [[sci]]
+
+The link:https://greensoftware.foundation[Green Software Foundation's] link:https://github.com/Green-Software-Foundation/sci[Software Carbon Intensity specification] is a effort that provides guidance on how to compute an application's carbon impact in a standard way that allows you to compare multiple services (or multiple implementations of the same service) and make decisions that reduce that impact.
+
+The specification itself is very readable, and explains the purpose of this approach best:
+
+> Reducing an SCI score is only possible through the elimination of emissions. That can be achieved by modifying a software system to use less physical hardware, less energy, or consume lower-carbon energy sources.
+
+The three key components used by SCI listed above deserve special attention as developers of Spring Boot applications:
+
+==== Using Less Physical Hardware
+
+The concept of _embodied emissions_ means that all physical hardware - the compute hardware serving your application, the network infrastructure delivering it to users, the disks providing storage, _everything_ - needed to be built in order to make your application possible.  If your app didn't need to be hosted and all other apps didn't need to be hosted, the hardware wouldn't need built in the first place and the resulting carbon impact of building it wouldn't exist.
+
+This means that by building and running our software, we have to own some portion of the carbon impact from all that hardware being built.  It's impossible to have _zero_ emobodied emissions in reality, but the first way to reduce our application's carbon intensity score is to make our software more efficient with the resources it needs.  By building our application to use less CPU, memory, network, and storage, we can run more software on the same hardware and use existing hardware for longer before upgrading.
+
+==== Using Less Energy
+
+Running any kind of software requires energy (measured in watts) running through the hardware to do any kind of work.  Energy measurements come in a variety of link:https://firefox-source-docs.mozilla.org/performance/power_profiling_overview.html#power-and-power-related-measurements[shapes, sources, and accuracies].
+
+==== Using Cleaner Energy
+
+TODO
 
 == Getting Started
 
-#TODO: work in progress#
+In the same example there are two services `hello-service` and `weather-service` where we have added the `carbon-aware-starter`. To start the project do the following steps :
+
+- Ensure that java-17 is installed in your machine
+- Create a `.env` file having the following properties :
+```
+  WATTTIME_CLIENT_USERNAME=<watttime_username>
+  WATTTIME_CLIENT_PASSWORD=<watttime_password>
+  EMISSIONS_LOCATION=<emissions_location>
+```
+- Build the application docker containers with `./playground.sh`
+- Start the docker containers (along with the third-party collectors) with `docker-compose up -d --build`
+- To visualise on grafana dashboards, use prometheus as a datasource and use `carbon_emissions` and `carbon_sci` as metrics in panels.
 
 == Architecture
 
-#TODO: work in progress#
+At the center of the project is the link:#carbon-aware-starter[carbon aware starter] which can be added to any spring boot app. The carbon-aware-starter fetches the emissions data from the carbon-aware-sdk. It does the processing on top of this emissions information, the energy it draws and the embodied emissions value and exposes the emissions and the <<sci, SCI>> value through the actuator endpoints and prometheus metrics. Those can be then monitored on prometheus or grafana dashboard. These can be then further used for monitoring & alerting when the sci score crosses a certain limit.
+
+image::images/architecture.png[]
+
+To see a sample example based on this, checkout the [Quickstart](#quickstart) section
 
 == Configuration
 
 #TODO: work in progress#
+
+== SCI Reducing Strategies
+
+This section is a work in progress.  We'll collect Spring Boot specific strategies and patterns that can show concrete SCI reductions using this library.
+
+For other maneuvers regardless of tech stack, check out the link:https://patterns.greensoftware.foundation/[Green Software Foundation's Patterns repository].
 
 == Development Environment
 
