@@ -24,6 +24,9 @@ jobs:
         with:
           name: Package
           path: staging
-      # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
+      - name: Publish snapshot package
+        run: cd carbon-aware-starter && mvn --batch-mode deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Update dependency graph
         uses: advanced-security/maven-dependency-submission-action@v3
