@@ -58,7 +58,7 @@
 		<repository>
 			<id>github</id>
 			<name>GitHub Packages</name>
-			<url>https://maven.pkg.github.com/mtthwcmpbll/spring-boot-carbon-metrics-</url>
+			<url>https://maven.pkg.github.com/mtthwcmpbll/spring-boot-carbon-metrics</url>
 		</repository>
 	</distributionManagement>
 
