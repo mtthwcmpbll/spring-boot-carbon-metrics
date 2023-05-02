@@ -1,8 +1,12 @@
 name: Publish snapshots to GitHub Packages
 on:
-  push:
+  workflow_run:
+    workflows: ["build-and-test"]
+    types:
+      - completed
 jobs:
   publish:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
