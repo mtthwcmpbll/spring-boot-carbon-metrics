@@ -8,16 +8,19 @@
 		<version>2.7.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.carbonaware</groupId>
+
+	<groupId>com.snowfort</groupId>
 	<artifactId>carbon-aware-starter</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
 	<name>carbon-aware-starter</name>
 	<description>Starter for integrating with carbon aware sdk</description>
-	<properties>
-		<java.version>11</java.version>
-	</properties>
-	<dependencies>
 
+	<properties>
+		<java.version>17</java.version>
+	</properties>
+
+	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -50,5 +53,13 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub Packages</name>
+			<url>https://maven.pkg.github.com/mtthwcmpbll/spring-boot-carbon-metrics</url>
+		</repository>
+	</distributionManagement>
 
 </project>
