@@ -53,18 +53,71 @@ TODO
 
 == Getting Started
 
-In the same example there are two services `hello-service` and `weather-service` where we have added the `carbon-aware-starter`. To start the project do the following steps :
+With an existing Spring Boot project, you can instrument the app by adding the starter as a dependency to your project:
 
-- Ensure that java-17 is installed in your machine
-- Create a `.env` file having the following properties :
+```xml
+<dependency>
+  <groupId>com.snowfort</groupId>
+  <artifactId>carbon-aware-starter</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+</dependency>
 ```
-  WATTTIME_CLIENT_USERNAME=<watttime_username>
-  WATTTIME_CLIENT_PASSWORD=<watttime_password>
-  EMISSIONS_LOCATION=<emissions_location>
+
+⚠️ _️Note: At this early stage of the project, we only publish build artifacts to GitHub Packages.  You'll need to add GitHub packages as a server and repository along with a personal access token to your Maven `~/.m2/settings.xml` as described in link:https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry#authenticating-with-a-personal-access-token[the GitHub documentation]._
+
+```xml
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <repositories>
+    <repository>
+      <id>central</id>
+      <url>https://repo1.maven.org/maven2</url>
+    </repository>
+    <repository>
+      <id>github</id>
+      <url>https://maven.pkg.github.com/mtthwcmpbll/spring-boot-carbon-metrics</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <servers>
+    <server>
+      <id>github</id>
+      <username>USER</username>
+      <password>TOKEN</password>
+    </server>
+  </servers>
+
+</settings>
 ```
-- Build the application docker containers with `./playground.sh`
-- Start the docker containers (along with the third-party collectors) with `docker-compose up -d --build`
-- To visualise on grafana dashboards, use prometheus as a datasource and use `carbon_emissions` and `carbon_sci` as metrics in panels.
+
+The Spring Boot Carbon Metrics project integrates with Green Software Foundation's link:https://github.com/Green-Software-Foundation/carbon-aware-sdk[Carbon-Aware SDK].  You can start up a local instance that communicates with the WattTime API as link:https://github.com/Green-Software-Foundation/carbon-aware-sdk/pkgs/container/carbon-aware-sdk[a Docker container] with the following command:
+
+```bash
+docker run -t -i \
+  -e 'WattTimeClient__Username=USERNAME' \
+  -e 'WattTimeClient__Password=PASSWORD' \
+  -e 'CarbonAwareVars__CarbonIntensityDataSource=WattTime' \
+  -p 80:80 \
+  --name carbon-aware-sdk ghcr.io/green-software-foundation/carbon-aware-sdk:sha-fb98ef8
+```
+
+Finally, configure a handful of properties for in your `application.yml` to point the application to the Carbon-Aware SDK:
+
+```yaml
+spring:
+  carbon-aware:
+    enabled: true
+    endpoint: http://localhost:80
+    location: westus2
+```
+
+If you start up your application with the starter added, you'll see a couple of new metrics published to your `/actuator/metrics` endpoints, including `carbon_emissions` and `carbon_sci`.
 
 == Architecture
 
