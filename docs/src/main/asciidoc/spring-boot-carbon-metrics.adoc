@@ -65,12 +65,27 @@ With an existing Spring Boot project, you can instrument the app by adding the s
 
 ⚠️ _️Note: At this early stage of the project, we only publish build artifacts to GitHub Packages.  You'll need to add GitHub packages as a server and repository along with a personal access token to your Maven `~/.m2/settings.xml` as described in link:https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry#authenticating-with-a-personal-access-token[the GitHub documentation]._
 
+settings.xml:
 ```xml
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
                       http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
+  <servers>
+    <server>
+      <id>github</id>
+      <username>USER</username>
+      <password>TOKEN</password>
+    </server>
+  </servers>
+
+</settings>
+```
+
+pom.xml:
+```xml
+  ...
   <repositories>
     <repository>
       <id>central</id>
@@ -84,25 +99,18 @@ With an existing Spring Boot project, you can instrument the app by adding the s
       </snapshots>
     </repository>
   </repositories>
-
-  <servers>
-    <server>
-      <id>github</id>
-      <username>USER</username>
-      <password>TOKEN</password>
-    </server>
-  </servers>
-
-</settings>
+  ...
 ```
 
 The Spring Boot Carbon Metrics project integrates with Green Software Foundation's link:https://github.com/Green-Software-Foundation/carbon-aware-sdk[Carbon-Aware SDK].  You can start up a local instance that communicates with the WattTime API as link:https://github.com/Green-Software-Foundation/carbon-aware-sdk/pkgs/container/carbon-aware-sdk[a Docker container] with the following command:
 
 ```bash
 docker run -t -i \
-  -e 'WattTimeClient__Username=USERNAME' \
-  -e 'WattTimeClient__Password=PASSWORD' \
-  -e 'CarbonAwareVars__CarbonIntensityDataSource=WattTime' \
+  -e 'DataSources__EmissionsDataSource=WattTime' \
+  -e 'DataSources__ForecastDataSource=WattTime' \
+  -e 'DataSources__Configurations__WattTime__Type=WattTime' \
+  -e 'DataSources__Configurations__WattTime__username=USERNAME' \
+  -e 'DataSources__Configurations__WattTime__password=PASSWORD' \
   -p 80:80 \
   --name carbon-aware-sdk ghcr.io/green-software-foundation/carbon-aware-sdk:sha-fb98ef8
 ```
