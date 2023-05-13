@@ -49,11 +49,14 @@ Running any kind of software requires energy (measured in watts) running through
 
 ==== Using Cleaner Energy
 
-TODO
+Whenever your application runs and uses energy to do its job, that energy ultimately comes from a source that produces some greenhouse gases as a byproduct.  Some methods of producing energy result in less greenhouse gas, and we can reduce our application's impact by doing our work in a location that has access to these cleaner energy options.  We can do this in two ways:
+
+1. Some data centers and cloud regions have access to clean energy sources, so we can chose to deploy our application in a location that generally has cleaner energy
+1. The mix of energy sources providing electricty on a power grid can change over time (throughout the day as solar availability changes, or over longer periods of time as weather and seasons shift).  We can chose to move or delay our workloads so that they run when energy is cleaner.
 
 == Getting Started
 
-With an existing Spring Boot project, you can instrument the app by adding the starter as a dependency to your project:
+You can get started with Spring Boot Carbon Metrics in an existing Spring Boot project by adding the starter as a dependency to your project:
 
 ```xml
 <dependency>
@@ -125,7 +128,26 @@ spring:
     location: westus2
 ```
 
-If you start up your application with the starter added, you'll see a couple of new metrics published to your `/actuator/metrics` endpoints, including `carbon_emissions` and `carbon_sci`.
+You can find a list of supported locations for your application in the link:https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/e9885d7190f2d7af05a32ef172d92328b0b6a8d8/src/data/location-sources/azure-regions.json[Carbon-Aware SDK Azure Region names].
+
+If you start up your application now, you'll see a couple of new metrics published to your `/actuator/metrics` endpoints, including `carbon_emissions` and `carbon_sci`:
+
+```bash
+➜ curl "http://localhost:8080/actuator/metrics/carbon.emissions" | jq
+
+{
+  "name": "carbon.emissions",
+  "description": null,
+  "baseUnit": null,
+  "measurements": [
+    {
+      "statistic": "VALUE",
+      "value": 516.18811706
+    }
+  ],
+  "availableTags": []
+}
+```
 
 == Architecture
 
@@ -133,30 +155,3 @@ At the center of the project is the link:#carbon-aware-starter[carbon aware star
 
 image::images/architecture.png[]
 
-To see a sample example based on this, checkout the [Quickstart](#quickstart) section
-
-== Configuration
-
-#TODO: work in progress#
-
-== SCI Reducing Strategies
-
-This section is a work in progress.  We'll collect Spring Boot specific strategies and patterns that can show concrete SCI reductions using this library.
-
-For other maneuvers regardless of tech stack, check out the link:https://patterns.greensoftware.foundation/[Green Software Foundation's Patterns repository].
-
-== Development Environment
-
-#TODO: work in progress#
-
-=== Building
-
-#TODO: work in progress#
-
-=== Releasing
-
-#TODO: work in progress#
-
-=== Support
-
-#TODO: work in progress#
