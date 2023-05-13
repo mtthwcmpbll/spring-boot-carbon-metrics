@@ -154,4 +154,3 @@ If you start up your application now, you'll see a couple of new metrics publish
 At the center of the project is the link:#carbon-aware-starter[carbon aware starter] which can be added to any spring boot app. The carbon-aware-starter fetches the emissions data from the carbon-aware-sdk. It does the processing on top of this emissions information, the energy it draws and the embodied emissions value and exposes the emissions and the <<sci, SCI>> value through the actuator endpoints and prometheus metrics. Those can be then monitored on prometheus or grafana dashboard. These can be then further used for monitoring & alerting when the sci score crosses a certain limit.
 
 image::images/architecture.png[]
-
