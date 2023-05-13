@@ -4,8 +4,6 @@ import com.carbonaware.apis.CarbonAwareSdkClient;
 import com.carbonaware.models.Emissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import java.util.Comparator;
 import java.util.List;

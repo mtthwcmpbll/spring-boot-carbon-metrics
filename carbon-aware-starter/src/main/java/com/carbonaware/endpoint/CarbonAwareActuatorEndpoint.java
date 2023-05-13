@@ -7,10 +7,14 @@ import com.carbonaware.sci.SoftwareCarbonIntensityService;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.boot.actuate.endpoint.web.annotation.RestControllerEndpoint;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 @RestControllerEndpoint(id = "carbon")
@@ -29,12 +33,12 @@ public class CarbonAwareActuatorEndpoint {
 
     @GetMapping("/sci")
     public ResponseEntity<SoftwareCarbonIntensity> sciEndpoint() {
-        return new ResponseEntity<>(sciService.getSoftwareCarbonIntensity(), HttpStatus.OK);
+        return new ResponseEntity<>(sciService.getSoftwareCarbonIntensity(), new HttpHeaders(), 200);
     }
 
     @GetMapping("/emissions")
     public ResponseEntity<List<Emissions>> emissions() {
-        return new ResponseEntity<>(client.emissionsForLocation(), HttpStatus.OK);
+        return new ResponseEntity<>(client.emissionsForLocation(), new HttpHeaders(), 200);
     }
 
     private void registerPrometheusEndpoints() {
