@@ -1,11 +1,7 @@
 package com.carbonaware.sci;
 
 import io.micrometer.core.instrument.*;
-import io.micrometer.core.instrument.search.Search;
 import org.slf4j.Logger;
-
-import java.util.Collection;
-import java.util.Random;
 
 public class ResourceUtilizationEnergyConsumptionProvider implements EnergyConsumptionProvider {
 
