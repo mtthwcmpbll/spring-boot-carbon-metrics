@@ -1,6 +1,7 @@
 package com.carbonaware.sci;
 
-import io.micrometer.core.instrument.*;
+import io.micrometer.core.instrument.Gauge;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 
 public class ResourceUtilizationEnergyConsumptionProvider implements EnergyConsumptionProvider {
