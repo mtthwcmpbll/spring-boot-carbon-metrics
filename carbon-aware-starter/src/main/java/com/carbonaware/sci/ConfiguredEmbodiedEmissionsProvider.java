@@ -1,10 +1,10 @@
 package com.carbonaware.sci;
 
-public class ConfiguredEmboddiedEmissionsProvider implements EmbodiedEmissionsProvider {
+public class ConfiguredEmbodiedEmissionsProvider implements EmbodiedEmissionsProvider {
 
     private double embodiedEmissions;
 
-    public ConfiguredEmboddiedEmissionsProvider(double embodiedEmissions) {
+    public ConfiguredEmbodiedEmissionsProvider(double embodiedEmissions) {
         this.embodiedEmissions = embodiedEmissions;
     }
 
