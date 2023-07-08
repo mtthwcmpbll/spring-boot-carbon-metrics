@@ -154,3 +154,40 @@ If you start up your application now, you'll see a couple of new metrics publish
 At the center of the project is the link:#carbon-aware-starter[carbon aware starter] which can be added to any spring boot app. The carbon-aware-starter fetches the emissions data from the carbon-aware-sdk. It does the processing on top of this emissions information, the energy it draws and the embodied emissions value and exposes the emissions and the <<sci, SCI>> value through the actuator endpoints and prometheus metrics. Those can be then monitored on prometheus or grafana dashboard. These can be then further used for monitoring & alerting when the sci score crosses a certain limit.
 
 image::images/architecture.png[]
+
+=== Providers
+
+The internal architecture provided by the carbon aware starter is modeled closely off of three primary components of the software carbon intensity score - emboddied emissions, energy consumption, and marginal emissions.  Each component is computed by a dedicated provider bean, allowing the starter to swap out better providers for specific environments or for developers to provide their own implementations.
+
+==== Embodied Emissions Providers
+
+- `ConfiguredEmbodiedEmissionsProvider` _(default)_ - This provider uses a static configured value as the embodied emissions for this service and the hardware it's using.  If left unconfigured, the default embodied emissions value is 0.
++
+configuration:
++
+```
+spring:
+  carbon-aware:
+    embodiedEmissions: 0.0
+```
+
+==== Energy Consumption Providers
+
+- `ResourceUtilizationEnergyConsumptionProvider` _(default)_ - This provider uses a heuristic approach based on the amount of CPUs used by the application and the percentage of those CPUs used.  This isn't the best stand-in for energy consumption, as it misses many other hardware that contribute to energy consumption and won't provide an concrete value in kilowatt-hours (kWh) as expected by the SCI computation.  It does scale roughly with the biggest contributor to energy usage though, and requires no special instrumentation for particular hardware so it's provided as a zero-configuration fallback.
+
+- `PowerUtilizationEnergyConsumptionProvider` - This provider uses the link:https://github.com/oshi/oshi[Oshi library] to pull live power consumption data from the underlying hardware.  This provider is much more accurate than the default heuristic approach, and is automatically configured whenever your project link:https://central.sonatype.com/artifact/com.github.oshi/oshi-core-java11/6.4.4[includes Oshi on the classpath].
+
+==== Marginal Emissions Providers
+
+The starter currently providers the following providers:
+
+- `CarbonAwareSdkMarginalEmissionsProvider` _(default)_ - This provider connects to the Green Software Foundation's Carbon-Aware SDK and provides the applications configured location to the SDK via an HTTP call to it's API.
++
+configuration:
++
+```
+spring:
+  carbon-aware:
+    endpoint: http://localhost:80
+    location: westus2
+```
