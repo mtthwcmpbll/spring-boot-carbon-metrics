@@ -10,10 +10,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.client.RestTemplate;
 
 @ConditionalOnProperty(prefix = "spring.carbon-aware", name = "enabled", matchIfMissing = true)
 @EnableConfigurationProperties(CarbonAwareProperties.class)
+@Import(OshiAutoConfiguration.class)
 public class CarbonAwareAutoConfiguration {
 
     @Bean
@@ -59,6 +61,6 @@ public class CarbonAwareAutoConfiguration {
     @ConditionalOnMissingBean(EmbodiedEmissionsProvider.class)
     @Bean
     public EmbodiedEmissionsProvider embodiedEmissionsProvider(CarbonAwareProperties props) {
-        return new ConfiguredEmboddiedEmissionsProvider(props.getEmbodiedEmissions());
+        return new ConfiguredEmbodiedEmissionsProvider(props.getEmbodiedEmissions());
     }
 }
