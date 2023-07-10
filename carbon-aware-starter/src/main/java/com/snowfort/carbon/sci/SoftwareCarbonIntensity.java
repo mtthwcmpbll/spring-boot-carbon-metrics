@@ -1,5 +1,8 @@
 package com.snowfort.carbon.sci;
 
+/**
+ * This is the primary provider of computed Software Carbon Intensity score.
+ */
 public class SoftwareCarbonIntensity {
 
     private double energyConsumption;
