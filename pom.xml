@@ -14,10 +14,6 @@
 	<modules>
 		<module>carbon-aware-starter</module>
 		<module>docs</module>
-
-		<!-- example modules -->
-		<module>examples/multiple-services/hello-service</module>
-		<module>examples/multiple-services/weather-service</module>
 	</modules>
 
 </project>
