@@ -10,10 +10,10 @@
 	</parent>
 
 	<groupId>com.snowfort.carbon</groupId>
-	<artifactId>carbon-aware-spring-boot-starter</artifactId>
+	<artifactId>carbon-metrics-spring-boot-starter</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>Carbon-Aware Metrics Starter</name>
+	<name>${project.groupId}:${project.artifactId}</name>
 	<description>A starter for integrating with carbon aware SDK with your Spring Boot application.</description>
 
 	<properties>

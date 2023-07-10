@@ -7,9 +7,31 @@
 	<artifactId>carbon-metrics-spring-boot-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	
-	<name>Carbon-Aware Metrics Parent</name>
+
+	<name>${project.groupId}:${project.artifactId}</name>
 	<description>The parent POM for all Spring Boot Carbon Metrics components.</description>
+	<url>https://github.com/mtthwcmpbll/spring-boot-carbon-metrics</url>
+
+	<developers>
+		<developer>
+			<name>Spring Boot Carbon Metrics Contributors</name>
+			<organization>GitHub Contributors</organization>
+			<organizationUrl>https://github.com/mtthwcmpbll/spring-boot-carbon-metrics/graphs/contributors</organizationUrl>
+		</developer>
+	</developers>
+
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>scm:git:git://github.com/mtthwcmpbll/spring-boot-carbon-metrics.git</connection>
+		<developerConnection>scm:git:ssh://github.com:mtthwcmpbll/spring-boot-carbon-metrics.git</developerConnection>
+		<url>https://github.com/mtthwcmpbll/spring-boot-carbon-metrics/tree/main/</url>
+	</scm>
 
 	<modules>
 		<module>carbon-aware-starter</module>
