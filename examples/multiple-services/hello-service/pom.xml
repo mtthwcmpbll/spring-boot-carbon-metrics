@@ -43,7 +43,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.snowfort</groupId>
+			<groupId>com.snowfort.carbon</groupId>
 			<artifactId>carbon-aware-starter</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
