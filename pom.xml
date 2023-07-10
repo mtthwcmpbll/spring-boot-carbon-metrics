@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.snowfort.carbon</groupId>
-	<artifactId>spring-boot-carbon-metrics-parent</artifactId>
+	<artifactId>carbon-metrics-spring-boot-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
-	<name>spring-boot-carbon-metrics-parent</name>
-	<description>Example API that calls a downstream API and provides a friendly greeting</description>
+	<name>Carbon-Aware Metrics Parent</name>
+	<description>The parent POM for all Spring Boot Carbon Metrics components.</description>
 
 	<modules>
 		<module>carbon-aware-starter</module>
