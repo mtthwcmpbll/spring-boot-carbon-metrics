@@ -42,7 +42,6 @@
 
 	<modules>
 		<module>carbon-aware-starter</module>
-		<module>docs</module>
 	</modules>
 
 	<profiles>
