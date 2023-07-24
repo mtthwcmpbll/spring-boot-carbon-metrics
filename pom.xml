@@ -14,9 +14,16 @@
 
 	<developers>
 		<developer>
-			<name>Spring Boot Carbon Metrics Contributors</name>
-			<organization>GitHub Contributors</organization>
-			<organizationUrl>https://github.com/mtthwcmpbll/spring-boot-carbon-metrics/graphs/contributors</organizationUrl>
+			<id>debo</id>
+			<name>Debojyoti Dey</name>
+			<email>iamdebojyotidey@gmail.com</email>
+			<url>https://www.linkedin.com/in/debojyoti-dey-228a98b5/</url>
+		</developer>
+		<developer>
+			<id>matt</id>
+			<name>Matthew Campbell</name>
+			<email>matt@snowfort.com</email>
+			<url>https://snowfort.com</url>
 		</developer>
 	</developers>
 
@@ -100,6 +107,17 @@
 							<serverId>ossrh</serverId>
 							<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
 							<autoReleaseAfterClose>false</autoReleaseAfterClose>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-release-plugin</artifactId>
+						<version>2.5.3</version>
+						<configuration>
+							<autoVersionSubmodules>true</autoVersionSubmodules>
+							<useReleaseProfile>true</useReleaseProfile>
+							<releaseProfiles>release</releaseProfiles>
+							<goals>deploy</goals>
 						</configuration>
 					</plugin>
 				</plugins>
