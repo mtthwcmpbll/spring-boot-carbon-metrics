@@ -4,7 +4,7 @@
 
 	<groupId>com.snowfort.carbon</groupId>
 	<artifactId>carbon-metrics-spring-boot-parent</artifactId>
-	<version>0.1.1-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>${project.groupId}:${project.artifactId}</name>
@@ -37,8 +37,8 @@
 		<connection>scm:git:git@github.com:mtthwcmpbll/spring-boot-carbon-metrics.git</connection>
 		<developerConnection>scm:git:git@github.com:mtthwcmpbll/spring-boot-carbon-metrics.git</developerConnection>
 		<url>https://github.com/mtthwcmpbll/spring-boot-carbon-metrics/tree/main/</url>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 
 	<modules>
 		<module>carbon-aware-starter</module>
