@@ -18,6 +18,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Publish package
-        run: cd carbon-aware-starter && mvn -B -V --settings ./.github/workflows/settings.xml deploy
+        run: mvn -B -V --settings ./.github/workflows/settings.xml deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
