@@ -26,7 +26,6 @@ jobs:
         run: mvn -Prelease,githubRelease -B -V deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
       - run: mkdir staging && cp carbon-aware-starter/target/*.jar staging
       - uses: actions/upload-artifact@v3
