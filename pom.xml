@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.snowfort.carbon</groupId>
 	<artifactId>carbon-metrics-spring-boot-parent</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0</version>
 	<packaging>pom</packaging>
 
 	<name>${project.groupId}:${project.artifactId}</name>
@@ -38,7 +37,8 @@
 		<connection>scm:git:git@github.com:mtthwcmpbll/spring-boot-carbon-metrics.git</connection>
 		<developerConnection>scm:git:git@github.com:mtthwcmpbll/spring-boot-carbon-metrics.git</developerConnection>
 		<url>https://github.com/mtthwcmpbll/spring-boot-carbon-metrics/tree/main/</url>
-	</scm>
+	  <tag>v0.1.0</tag>
+  </scm>
 
 	<modules>
 		<module>carbon-aware-starter</module>
