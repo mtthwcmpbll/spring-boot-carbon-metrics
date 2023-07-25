@@ -35,8 +35,8 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:git:ssh://git@github.com:mtthwcmpbll/spring-boot-carbon-metrics.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com:mtthwcmpbll/spring-boot-carbon-metrics.git</developerConnection>
+		<connection>scm:git:git@github.com:mtthwcmpbll/spring-boot-carbon-metrics.git</connection>
+		<developerConnection>scm:git:git@github.com:mtthwcmpbll/spring-boot-carbon-metrics.git</developerConnection>
 		<url>https://github.com/mtthwcmpbll/spring-boot-carbon-metrics/tree/main/</url>
 	</scm>
 
