@@ -18,3 +18,5 @@ jobs:
         run: mvn -Prelease,githubRelease -B -V --settings ./.github/workflows/settings.xml deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
