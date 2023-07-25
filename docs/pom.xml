@@ -21,7 +21,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>3.3.0</version>
+				<version>3.4.0</version>
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>
@@ -55,18 +55,18 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-dependency-plugin</artifactId>
-						<version>3.3.0</version>
+						<version>3.6.0</version>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-resources-plugin</artifactId>
-						<version>3.2.0</version>
+						<version>3.3.1</version>
 					</plugin>
 
 					<plugin>
 						<groupId>org.asciidoctor</groupId>
 						<artifactId>asciidoctor-maven-plugin</artifactId>
-						<version>2.2.2</version>
+						<version>2.2.4</version>
 						<executions>
 							<execution>
 								<id>output-html</id>

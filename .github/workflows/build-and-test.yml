@@ -20,10 +20,21 @@ jobs:
           server-id: github
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: GPG_PASSPHRASE
+      - name: Show settings.xml
+        run: |
+          cat ~/.m2/settings.xml
+      - name: List GPG Keys
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: |
+          gpg -K
+          gpg --version
+          echo $GPG_PASSPHRASE
       - name: Build with Maven
-        run: mvn -B -V package --file pom.xml
+        run: ./mvnw --batch-mode -V package --file pom.xml
       - name: Publish snapshot package
-        run: mvn -Prelease,githubRelease -B -V deploy
+        run: ./mvnw -Prelease,githubRelease --batch-mode -V deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
