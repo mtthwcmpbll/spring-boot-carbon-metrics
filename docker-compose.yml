@@ -56,16 +56,26 @@ services:
       - zipkin-all-in-one
 
   carbon-aware-sdk:
-    image: carbon_aware:v1
+    image: ghcr.io/green-software-foundation/carbon-aware-sdk:sha-fb98ef8
     ports:
       - "80:80"
     env_file:
       - .env
     container_name: carbon-aware-sdk
+    volumes:
+      - ./docker/carbon-aware-sdk/location-sources:/app/location-sources
     environment:
-      - CarbonAwareVars__CarbonIntensityDataSource=WattTime
-      - WattTimeClient__Username=${WATTTIME_CLIENT_USERNAME:?err}
-      - WattTimeClient__Password=${WATTTIME_CLIENT_PASSWORD:?err}
+      - DataSources__EmissionsDataSource=WattTime
+      - DataSources__ForecastDataSource=WattTime
+      - DataSources__Configurations__WattTime__Type=WattTime
+      - DataSources__Configurations__WattTime__username=${WATTTIME_CLIENT_USERNAME:?err}
+      - DataSources__Configurations__WattTime__password=${WATTTIME_CLIENT_PASSWORD:?err}
+      - LocationDataSourcesConfiguration__LocationSourceFiles__0__DataFileLocation=azure-regions.json
+      - LocationDataSourcesConfiguration__LocationSourceFiles__0__Prefix=az
+      - LocationDataSourcesConfiguration__LocationSourceFiles__0__Delimiter=-
+      - LocationDataSourcesConfiguration__LocationSourceFiles__1__DataFileLocation=custom-regions.json
+      - LocationDataSourcesConfiguration__LocationSourceFiles__1__Prefix=custom
+      - LocationDataSourcesConfiguration__LocationSourceFiles__1__Delimiter=_
   
   ## Application
 
@@ -82,7 +92,7 @@ services:
     depends_on:
       - otel-collector
     environment:
-      - CARBON_AWARE_ENDPOINT=http://carbon-aware-sdk:80
+      - CARBON_AWARE_ENDPOINT=http:/app/location-sources/json/custom-regions.json'//carbon-aware-sdk:80
       - EMISSIONS_LOCATION=${EMISSIONS_LOCATION}
       - weatherServiceForecast_baseUrl=http://weather-service:8081
 
