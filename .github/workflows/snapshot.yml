@@ -1,0 +1,45 @@
+name: Release a Snapshot
+
+on:
+  # Release a SNAPSHOT version whenever we push to main branch
+  push:
+    branches:
+      - main
+  # Allow us to trigger a SNAPSHOT release from anywhere manually in a pinch
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+          server-id: github
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: GPG_PASSPHRASE
+
+      - name: Import Github User
+        run: |
+          mkdir -p ~/.ssh
+          echo SSH_PRIVATE_KEY >> ~/.ssh/id_ed25519
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+
+      - name: Configure Git user
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+
+      - name: Publish JAR
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+        run: |
+          ./mvnw -Prelease,githubRelease -B -V deploy

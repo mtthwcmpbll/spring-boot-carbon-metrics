@@ -17,12 +17,22 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
-      - name: Publish snapshot package
-        run: cd carbon-aware-starter && mvn --batch-mode deploy
+          server-id: github
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: GPG_PASSPHRASE
+      - name: Show settings.xml
+        run: |
+          cat ~/.m2/settings.xml
+      - name: List GPG Keys
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: |
+          gpg -K
+          gpg --version
+          echo $GPG_PASSPHRASE
+      - name: Build with Maven
+        run: ./mvnw --batch-mode -V clean package --file pom.xml
       - run: mkdir staging && cp carbon-aware-starter/target/*.jar staging
       - uses: actions/upload-artifact@v3
         with:

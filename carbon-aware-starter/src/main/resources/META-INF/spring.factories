@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.carbonaware.config.CarbonAwareAutoConfiguration
+  com.snowfort.carbon.config.CarbonAwareAutoConfiguration

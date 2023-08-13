@@ -1,6 +1,6 @@
 package com.example.hello;
 
-import com.carbonaware.sci.EmbodiedEmissionsProvider;
+import com.snowfort.carbon.sci.EmbodiedEmissionsProvider;
 import org.springframework.stereotype.Component;
 
 @Component
