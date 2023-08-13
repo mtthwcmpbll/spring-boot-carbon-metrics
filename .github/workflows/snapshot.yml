@@ -50,14 +50,14 @@ jobs:
           distribution: 'temurin'
           cache: maven
           server-id: ossrh
+          server-username: SONATYPE_USERNAME
+          server-password: SONATYPE_PASSWORD
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: GPG_PASSPHRASE
 
       - name: Publish Snapshot to OSSRH
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         run: |
           ./mvnw -Prelease,ossrhRelease -B -V deploy
 
