@@ -22,13 +22,6 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: GPG_PASSPHRASE
 
-      - name: Set up JDK 17 for GitHub Publishing
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          server-id: github
-
       - name: Import Github User
         run: |
           mkdir -p ~/.ssh
@@ -41,9 +34,22 @@ jobs:
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
 
-      - name: Publish Snapshot to GitHub Packages
+      - name: Build & sign artifacts
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ./mvnw -Prelease -B -V clean package
+
+      - name: Set up JDK 17 for GitHub Publishing
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          server-id: github
+
+      - name: Publish Snapshot to GitHub Packages
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ./mvnw -Prelease,githubRelease -B -V deploy
