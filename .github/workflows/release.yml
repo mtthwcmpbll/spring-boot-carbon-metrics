@@ -57,3 +57,13 @@ jobs:
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         run: |
           ./mvnw -Prelease,ossrhRelease -B -V -Dtag=v${{ github.event.inputs.version }} -DreleaseVersion=${{ github.event.inputs.version }} -DdevelopmentVersion=${{ github.event.inputs.development_version }} release:prepare release:perform
+
+      - name: Create a GitHub Release
+        run: |
+          gh release create v${{ github.event.inputs.version }} --title "v${{ github.event.inputs.version }} Release"
+          
+          gh release upload v${{ github.event.inputs.version }} target/checkout/target/carbon-metrics-spring-boot-starter-${{ github.event.inputs.version }}.jar
+          gh release upload v${{ github.event.inputs.version }} target/checkout/target/carbon-metrics-spring-boot-starter-${{ github.event.inputs.version }}-sources.jar
+          gh release upload v${{ github.event.inputs.version }} target/checkout/target/carbon-metrics-spring-boot-starter-${{ github.event.inputs.version }}-javadoc.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
