@@ -58,4 +58,4 @@ jobs:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         run: |
-          ./mvnw -Prelease,ossrhRelease -DdryRun=true -B -V -Dtag=v${{ github.event.inputs.version }} -DreleaseVersion=${{ github.event.inputs.version }} -DdevelopmentVersion=${{ github.event.inputs.development_version }} release:prepare release:perform
+          ./mvnw -Prelease,ossrhRelease -B -V -Dtag=v${{ github.event.inputs.version }} -DreleaseVersion=${{ github.event.inputs.version }} -DdevelopmentVersion=${{ github.event.inputs.development_version }} release:prepare release:perform
