@@ -62,8 +62,8 @@ jobs:
         run: |
           gh release create v${{ github.event.inputs.version }} --title "v${{ github.event.inputs.version }} Release"
           
-          gh release upload v${{ github.event.inputs.version }} target/checkout/target/carbon-metrics-spring-boot-starter-${{ github.event.inputs.version }}.jar
-          gh release upload v${{ github.event.inputs.version }} target/checkout/target/carbon-metrics-spring-boot-starter-${{ github.event.inputs.version }}-sources.jar
-          gh release upload v${{ github.event.inputs.version }} target/checkout/target/carbon-metrics-spring-boot-starter-${{ github.event.inputs.version }}-javadoc.jar
+          gh release upload v${{ github.event.inputs.version }} target/checkout/carbon-metrics-spring-boot-starter/target/carbon-metrics-spring-boot-starter-${{ github.event.inputs.version }}.jar
+          gh release upload v${{ github.event.inputs.version }} target/checkout/carbon-metrics-spring-boot-starter/target/carbon-metrics-spring-boot-starter-${{ github.event.inputs.version }}-sources.jar
+          gh release upload v${{ github.event.inputs.version }} target/checkout/carbon-metrics-spring-boot-starter/target/carbon-metrics-spring-boot-starter-${{ github.event.inputs.version }}-javadoc.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
