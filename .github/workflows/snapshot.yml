@@ -39,7 +39,7 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ./mvnw -Prelease -B -V clean package
+          ./mvnw -Prelease -B -V clean install
 
       - name: Set up JDK 17 for GitHub Publishing
         uses: actions/setup-java@v3
