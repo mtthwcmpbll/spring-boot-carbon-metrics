@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.snowfort.carbon</groupId>
 		<artifactId>carbon-metrics-spring-boot-parent</artifactId>
-		<version>0.0.5</version>
+		<version>0.0.6-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>carbon-metrics-spring-boot-docs</artifactId>
