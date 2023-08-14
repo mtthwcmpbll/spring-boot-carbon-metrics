@@ -24,13 +24,10 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: GPG_PASSPHRASE
 
-      - name: Import Github User
-        run: |
-          mkdir -p ~/.ssh
-          echo SSH_PRIVATE_KEY >> ~/.ssh/id_ed25519
-          chmod 400 ~/.ssh/id_ed25519
-        env:
-          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+      - name: Install SSH Client Key
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Configure Git user
         run: |
