@@ -56,7 +56,7 @@ services:
       - zipkin-all-in-one
 
   carbon-aware-sdk:
-    image: ghcr.io/green-software-foundation/carbon-aware-sdk:sha-fb98ef8
+    image: ghcr.io/green-software-foundation/carbon-aware-sdk:v1.1.0
     ports:
       - "80:80"
     env_file:
@@ -92,8 +92,8 @@ services:
     depends_on:
       - otel-collector
     environment:
-      - CARBON_AWARE_ENDPOINT=http:/app/location-sources/json/custom-regions.json'//carbon-aware-sdk:80
-      - EMISSIONS_LOCATION=${EMISSIONS_LOCATION}
+      - CARBON_AWARE_ENDPOINT=http://carbon-aware-sdk:80
+      - EMISSIONS_LOCATION=custom_CAISO_NORTH
       - weatherServiceForecast_baseUrl=http://weather-service:8081
 
   weather-service:
@@ -110,4 +110,4 @@ services:
       - otel-collector
     environment:
       - CARBON_AWARE_ENDPOINT=http://carbon-aware-sdk:80
-      - EMISSIONS_LOCATION=${EMISSIONS_LOCATION}
+      - EMISSIONS_LOCATION=custom_CAISO_NORTH

@@ -52,8 +52,8 @@
 		</dependency>
 		<dependency>
 			<groupId>com.snowfort.carbon</groupId>
-			<artifactId>carbon-aware-starter</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<artifactId>carbon-metrics-spring-boot-starter</artifactId>
+			<version>0.0.5</version>
 		</dependency>
 		<dependency>
 			<groupId>io.micrometer</groupId>
